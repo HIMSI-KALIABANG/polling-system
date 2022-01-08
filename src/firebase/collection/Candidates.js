@@ -1,10 +1,6 @@
-import firestore from '../config';
+import firestore from '../';
 import { collection } from 'firebase/firestore';
 
-const CandidatesCollection = () => {
-  const candidates = collection(firestore, 'candidates');
+const CandidatesCollection = collection(firestore, 'candidates');
 
-  return candidates;
-};
-
-export default CandidatesCollection();
+export default CandidatesCollection;

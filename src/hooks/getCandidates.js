@@ -1,27 +1,26 @@
 import { useEffect, useState } from 'react';
 import candidatesCollection from '../firebase/collection/Candidates';
-import { getDocs } from 'firebase/firestore';
+import { onSnapshot } from 'firebase/firestore';
 
 const GetCandidates = () => {
-  const [doc, setDoc] = useState(null);
+  const [data, setData] = useState(null);
   const [error, setError] = useState(false);
-  const [message, setMessage] = useState(null);
 
   useEffect(() => {
-    getDocs(candidatesCollection)
-      .then((collection) =>
-        collection.docs.map((doc, _) => {
-          return { id: doc.id, ...doc.data() };
-        })
-      )
-      .then((doc) => setDoc(doc))
-      .catch((error) => {
-        setError(true);
-        setMessage(error);
-      });
-  }, []);
+    const getCandidates = onSnapshot(candidatesCollection, (snapshot, error) => {
+      const data = [];
+      if (error) setError(error);
 
-  return { doc, error, message };
+      snapshot.docs.map((doc) => {
+        data.push({ ...doc.data(), id: doc.id });
+        return doc.data();
+      });
+      setData(data);
+    });
+    return () => getCandidates();
+  }, [data]);
+
+  return { data, error };
 };
 
 export default GetCandidates;

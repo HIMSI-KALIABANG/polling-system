@@ -1,4 +1,4 @@
-const VoterTableComponent = ({ voter: { name, candidate } }) => {
+const VoterTableComponent = ({ voter }) => {
   return (
     <>
       <div className="flex flex-col">
@@ -17,10 +17,17 @@ const VoterTableComponent = ({ voter: { name, candidate } }) => {
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  <tr>
-                    <td className="px-6 py-4 whitespace-nowrap capitalize font-poppins">{name}</td>
-                    <td className="px-6 py-4 whitespace-nowrap capitalize font-poppins">{candidate}</td>
-                  </tr>
+                  {voter &&
+                    voter.map(({ name, candidate }, index) => {
+                      return (
+                        <>
+                          <tr key={index}>
+                            <td className="px-6 py-4 whitespace-nowrap capitalize font-poppins">{name}</td>
+                            <td className="px-6 py-4 whitespace-nowrap capitalize font-poppins">{candidate}</td>
+                          </tr>
+                        </>
+                      );
+                    })}
                 </tbody>
               </table>
             </div>

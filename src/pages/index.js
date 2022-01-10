@@ -23,7 +23,6 @@ const Home = (state) => {
     if (name === '') {
       return navigate('/', {
         replace: true,
-        state: 'Isi nama lebih dahulu',
       });
     }
 
@@ -31,7 +30,6 @@ const Home = (state) => {
 
     navigate('/vote', {
       replace: true,
-      state: 'Success Login',
     });
   };
   return (

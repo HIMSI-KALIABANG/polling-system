@@ -18,7 +18,7 @@ const GetCandidates = () => {
       setData(data);
     });
     return () => getCandidates();
-  }, [data]);
+  }, []);
 
   return { data, error };
 };

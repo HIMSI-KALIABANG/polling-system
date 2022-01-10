@@ -4,10 +4,32 @@ import VoterTableComponent from '../components/VoterTableComponent';
 import ClockComponent from '../components/ClockComponent';
 import GetCandidates from '../hooks/getCandidates';
 import GetVoter from '../hooks/getVoter';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 const Vote = () => {
   const candidates = GetCandidates();
   const voter = GetVoter();
+  const [trial, setTrial] = useState(false);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (voter.voter) {
+      const IPList = [];
+      voter.voter.map((vote) => IPList.push(vote.ipaddress));
+      const userIp = JSON.parse(window.localStorage.getItem('users'));
+
+      if (!userIp) {
+        navigate('/');
+      }
+
+      if (IPList.includes(userIp.ip)) {
+        setTrial(true);
+      }
+    }
+  }, [voter.voter, navigate]);
 
   return (
     <>
@@ -19,7 +41,7 @@ const Vote = () => {
           {!candidates.data && <LoadingComponent />}
           {candidates.data &&
             candidates.data.map((candidate, index) => {
-              return <CandidatesComponent candidate={candidate} key={index} />;
+              return <CandidatesComponent candidate={candidate} key={index} trial={trial} />;
             })}
         </div>
         <div className="py-8 md:mx-28 mx-8 md:text-center">
@@ -41,10 +63,7 @@ const Vote = () => {
           </div>
         </div>
         {!voter.voter && <LoadingComponent />}
-        {voter.voter &&
-          voter.voter.map((vote, index) => {
-            return <VoterTableComponent voter={vote} key={index} />;
-          })}
+        <VoterTableComponent voter={voter.voter} />
       </div>
     </>
   );

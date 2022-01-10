@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const Home = () => {
+const Home = (state) => {
   const [name, setName] = useState('');
   const [ipAddress, setipAddress] = useState('');
   const navigate = useNavigate();
@@ -19,7 +19,15 @@ const Home = () => {
 
   const loginHandler = (e) => {
     e.preventDefault();
-    localStorage.setItem('users', JSON.stringify({ nama: e.target.nama.value, ip: ipAddress }));
+
+    if (name === '') {
+      return navigate('/', {
+        replace: true,
+        state: 'Isi nama lebih dahulu',
+      });
+    }
+
+    localStorage.setItem('users', JSON.stringify({ name: e.target.nama.value, ip: ipAddress }));
 
     navigate('/vote', {
       replace: true,

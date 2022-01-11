@@ -1,7 +1,5 @@
 import CandidatesComponent from '../components/CandidatesComponent';
 import LoadingComponent from '../components/LoadingComponent';
-import VoterTableComponent from '../components/VoterTableComponent';
-import ClockComponent from '../components/ClockComponent';
 import GetCandidates from '../hooks/getCandidates';
 import GetVoter from '../hooks/getVoter';
 import { useEffect } from 'react';

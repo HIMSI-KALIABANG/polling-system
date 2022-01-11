@@ -44,26 +44,6 @@ const Vote = () => {
               return <CandidatesComponent candidate={candidate} key={index} trial={trial} />;
             })}
         </div>
-        <div className="py-8 md:mx-28 mx-8 md:text-center">
-          <h4 className="text-xl font-poppins">Total Pemungutan Suara</h4>
-          {!voter.voter && <span className="font-poppins text-sm">Tunggu Sebentar</span>}
-          <span className="text-lg text-slate-500">{voter.voter && voter.voter.length}</span>
-          <div className="mt-16">
-            <h4 className="text-xl font-poppins">Urutan Teratas </h4>
-            {!candidates.data && <span className="font-poppins text-sm">Tunggu Sebentar</span>}
-            <span className="uppercase">{candidates.data && candidates.data.sort((a, b) => b.count - a.count)[0].name}</span>
-          </div>
-        </div>
-      </div>
-      <div className="mx-8 md:mx-28">
-        <div className="flex my-4">
-          <h4 className="text-xl font-poppins ">Live Preview</h4>
-          <div className="ml-auto flex">
-            <ClockComponent />
-          </div>
-        </div>
-        {!voter.voter && <LoadingComponent />}
-        <VoterTableComponent voter={voter.voter} />
       </div>
     </>
   );

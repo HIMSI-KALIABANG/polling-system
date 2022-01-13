@@ -99,7 +99,7 @@ const Admin = () => {
               <div className="flex items-center">
                 <div className="py-4 text-center">
                   <h6 className="font-poppins text-lg">Total Pemungutan suara</h6>
-                  <span className="font-poppins">{voter && voter.length}</span>
+                  <span className="font-poppins">{voter && voter.filter((vote) => vote.status === true).length}</span>
                 </div>
                 <div className="ml-auto py-4 text-center">
                   <h6 className="font-poppins text-lg">Kandidat Pemenang </h6>

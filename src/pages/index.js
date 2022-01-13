@@ -34,7 +34,7 @@ const Home = () => {
       return navigate('/admin');
     }
 
-    const validToken = voter.filter((vote) => vote.token == token);
+    const validToken = voter.filter((vote) => vote.token === token);
 
     if (validToken.length > 0) {
       localStorage.removeItem('token');

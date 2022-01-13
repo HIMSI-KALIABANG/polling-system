@@ -10,7 +10,6 @@ import BarChartComponent from '../components/BarChartComponent';
 import PieChartComponent from '../components/PieChartComponent';
 import { addDoc } from 'firebase/firestore';
 import VoterCollection from '../firebase/collection/Voter';
-import { async } from '@firebase/util';
 
 const Admin = () => {
   const [secretKey, setSecretKey] = useState('');
@@ -25,7 +24,7 @@ const Admin = () => {
     if (!currentSecretKey.secret_key) return navigate('/');
 
     setSecretKey(currentSecretKey.secret_key);
-  }, []);
+  }, [navigate]);
 
   useEffect(() => {
     if (secretKey) {
@@ -33,7 +32,7 @@ const Admin = () => {
         return navigate('/');
       }
     }
-  }, [secretKey]);
+  }, [secretKey, navigate]);
 
   const submitHandler = (e) => {
     e.preventDefault();

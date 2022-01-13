@@ -12,7 +12,7 @@ const Vote = () => {
   useEffect(() => {
     const currentToken = JSON.parse(localStorage.getItem('token'));
     if (!currentToken) return navigate('/');
-  }, []);
+  }, [navigate]);
 
   return (
     <>

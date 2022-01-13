@@ -49,7 +49,7 @@ const Admin = () => {
     })
       .then((response) => response.json())
       .then(async () => {
-        const result = await addDoc(VoterCollection, {
+        await addDoc(VoterCollection, {
           name: participant.value,
           token: token.value,
           status: false,

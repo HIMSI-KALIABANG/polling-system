@@ -132,7 +132,7 @@ const Admin = () => {
                       <input type="text" name="token" disabled value={Math.random().toString(36).substring(2, 8).toUpperCase()} className="px-4 py-2 my-2 focus:outline-none shadow-sm rounded bg-gray-200 text-black" />
                       <div className="ml-auto">
                         {fillField && (
-                          <button className="px-4 py-2 bg-gray-800 text-white rounded shadow" disabled>
+                          <button className="px-4 py-2 bg-gray-200 text-black rounded shadow" disabled>
                             Isi dulu namanya
                           </button>
                         )}

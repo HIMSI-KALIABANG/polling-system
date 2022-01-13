@@ -14,6 +14,8 @@ import VoterCollection from '../firebase/collection/Voter';
 const Admin = () => {
   const [secretKey, setSecretKey] = useState('');
   const [participant, setParticipant] = useState('');
+  const [fillField, setFillField] = useState(false);
+  const [success, setSuccess] = useState(false);
   const [form, setForm] = useState(false);
   const navigate = useNavigate();
   const { voter } = GetVoter();
@@ -33,31 +35,41 @@ const Admin = () => {
         return navigate('/');
       }
     }
-  }, [secretKey, navigate]);
+
+    if (participant === '') {
+      setFillField(true);
+    } else {
+      setFillField(false);
+    }
+  }, [secretKey, navigate, participant]);
 
   const submitHandler = (e) => {
     e.preventDefault();
 
     const { token } = e.target;
 
-    fetch(process.env.REACT_APP_SHEET_API, {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-      },
-      body: JSON.stringify([[participant, token.value]]),
-    })
-      .then((response) => response.json())
-      .then(async () => {
-        await addDoc(VoterCollection, {
-          name: participant.value,
-          token: token.value,
-          status: false,
-        });
-
-        setParticipant('');
+    if (participant !== '') {
+      fetch(process.env.REACT_APP_SHEET_API, {
+        method: 'POST',
+        headers: {
+          'content-type': 'application/json',
+        },
+        body: JSON.stringify([[participant, token.value]]),
       })
-      .catch((err) => console.log(err));
+        .then((response) => response.json())
+        .then(async () => {
+          const result = await addDoc(VoterCollection, {
+            name: participant,
+            token: token.value,
+            status: false,
+          });
+          if (result) {
+            setParticipant('');
+            setSuccess(true);
+          }
+        })
+        .catch((err) => console.log(err));
+    }
   };
 
   return (
@@ -116,9 +128,15 @@ const Admin = () => {
                   <form onSubmit={submitHandler}>
                     <div className="flex flex-col">
                       <input type="text" onChange={(e) => setParticipant(e.target.value)} value={participant} placeholder="Nama Peserta" className="px-4 py-2 my-2 focus:outline-none shadow-sm rounded bg-gray-200 text-black" />
+                      {success && <span className="text-green-400">Berhasil ditambahkan </span>}
                       <input type="text" name="token" disabled value={Math.random().toString(36).substring(2, 8).toUpperCase()} className="px-4 py-2 my-2 focus:outline-none shadow-sm rounded bg-gray-200 text-black" />
                       <div className="ml-auto">
-                        <button className="px-4 py-2 bg-gray-800 text-white rounded shadow">Submit</button>
+                        {fillField && (
+                          <button className="px-4 py-2 bg-gray-800 text-white rounded shadow" disabled>
+                            Isi dulu namanya
+                          </button>
+                        )}
+                        {!fillField && <button className="px-4 py-2 bg-gray-800 text-white rounded shadow">Submit</button>}
                       </div>
                     </div>
                   </form>

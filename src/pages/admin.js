@@ -91,7 +91,7 @@ const Admin = () => {
             <div className="py-14">
               <div className="pb-6 capitalize lg:w-1/2 w-full flex flex-col lg:flex-row">
                 <Link to={'/admin'} className="mb-6 lg:mb-0">
-                  <span className="px-8 py-2 bg-primary mr-4 border-secondary border-2 text-secondary text-md rounded-md">tabel peserta</span>
+                  <span className="px-8 py-2 bg-primary mr-4 border-secondary border-2 text-secondary text-md rounded-md">Live tabel </span>
                 </Link>
                 <Link to={'participant'}>
                   <span className="px-8 py-2 bg-primary mr-4 border-secondary border-2 text-secondary text-md rounded-md">tambah peserta</span>

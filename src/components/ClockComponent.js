@@ -11,8 +11,8 @@ const ClockComponent = () => {
 
   return (
     <>
-      <div className="bg-gray-800 rounded text-white  shadow-md p-2">
-        <span>
+      <div className="bg-primary border-2 border-secondary rounded text-secondary shadow-md px-2 lg:px-4 py-2">
+        <span className="text-sm lg:text-lg">
           {clock.toLocaleString('En-US', {
             month: 'short',
             day: '2-digit',
@@ -20,8 +20,8 @@ const ClockComponent = () => {
           })}
         </span>
       </div>
-      <div className="bg-gray-800 rounded text-white ml-1 animate-pulse shadow-md p-2">
-        <span>
+      <div className="bg-primary border-2 border-secondary rounded text-secondary ml-1 shadow-md px-2 lg:px-4 py-2">
+        <span className="text-sm lg:text-lg">
           {clock.toLocaleString('En-US', {
             hour: '2-digit',
             minute: '2-digit',

@@ -8,7 +8,6 @@ const BarChartComponent = ({ candidates }) => {
   const options = {
     responsive: true,
     maintainAspectRatio: true,
-    aspectRatio: 2,
   };
 
   const data = {
@@ -17,7 +16,7 @@ const BarChartComponent = ({ candidates }) => {
       {
         label: 'Jumlah Suara Kandidat',
         data: candidates.map((candidate) => candidate.count),
-        backgroundColor: ['rgb(62, 62, 62)', 'rgb(102, 102, 102)', 'rgb(122, 122, 122)'],
+        backgroundColor: ['rgba(0, 147, 255, 0.2)', 'rgba(0, 147, 200, 0.2)', 'rgba(0, 147, 150, 0.2)'],
       },
     ],
   };

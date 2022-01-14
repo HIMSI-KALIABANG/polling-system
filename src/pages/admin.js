@@ -1,30 +1,23 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
 import ClockComponent from '../components/ClockComponent';
 import LoadingComponent from '../components/LoadingComponent';
-import VoterTableComponent from '../components/VoterTableComponent';
 import GetVoter from '../hooks/getVoter';
 import GetCandidates from '../hooks/getCandidates';
-import CandidatePictureComponent from '../components/CandidatePictureComponent';
 import BarChartComponent from '../components/BarChartComponent';
 import PieChartComponent from '../components/PieChartComponent';
-import { addDoc } from 'firebase/firestore';
-import VoterCollection from '../firebase/collection/Voter';
 
 const Admin = () => {
   const [secretKey, setSecretKey] = useState('');
-  const [participant, setParticipant] = useState('');
-  const [fillField, setFillField] = useState(false);
-  const [success, setSuccess] = useState(false);
-  const [form, setForm] = useState(false);
+
   const navigate = useNavigate();
   const { voter } = GetVoter();
   const candidates = GetCandidates();
 
   useEffect(() => {
     const currentSecretKey = JSON.parse(localStorage.getItem('admin'));
-    if (!currentSecretKey) return navigate('/');
-    if (!currentSecretKey.secret_key) return navigate('/');
+    if (!currentSecretKey) return navigate('/404');
+    if (!currentSecretKey.secret_key) return navigate('/404');
 
     setSecretKey(currentSecretKey.secret_key);
   }, [navigate]);
@@ -32,123 +25,83 @@ const Admin = () => {
   useEffect(() => {
     if (secretKey) {
       if (secretKey !== process.env.REACT_APP_SECRET_KEY) {
-        return navigate('/');
+        return navigate('/404');
       }
     }
-
-    if (participant === '') {
-      setFillField(true);
-    } else {
-      setFillField(false);
-    }
-  }, [secretKey, navigate, participant]);
-
-  const submitHandler = (e) => {
-    e.preventDefault();
-
-    const { token } = e.target;
-
-    if (participant !== '') {
-      fetch(process.env.REACT_APP_SHEET_API, {
-        method: 'POST',
-        headers: {
-          'content-type': 'application/json',
-        },
-        body: JSON.stringify([[participant, token.value]]),
-      })
-        .then((response) => response.json())
-        .then(async () => {
-          const result = await addDoc(VoterCollection, {
-            name: participant,
-            token: token.value,
-            status: false,
-          });
-          if (result) {
-            setParticipant('');
-            setSuccess(true);
-          }
-        })
-        .catch((err) => console.log(err));
-    }
-  };
+  }, [secretKey, navigate]);
 
   return (
-    <div>
-      <div className="lg:mx-28 mx-8 ">
-        {/* <h5 className="font-poppins text-xl py-3">Selamat datang, Admin</h5> */}
-        <div className="flex py-4">
-          <h4 className="text-xl font-poppins ">Live Preview</h4>
+    <div className="min-h-screen bg-primary">
+      <div className="lg:mx-32 mx-8 py-8">
+        <div className="flex">
+          <div className="py-2">
+            <h5 className="text-md md:text-xl 2xl:text-2xl font-poppins text-title font-bold uppercase">Live Preview</h5>
+          </div>
           <div className="ml-auto flex">
             <ClockComponent />
           </div>
         </div>
-
-        {voter ? (
+        {candidates.data ? (
           <>
-            <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
-              <div className="flex py-8">
-                {candidates.data &&
-                  candidates.data.map(({ name, count }, index) => {
-                    return (
-                      <>
-                        <CandidatePictureComponent key={index} candidate={{ name, count }} />
-                      </>
-                    );
-                  })}
-              </div>
-              <div className="flex items-center">
-                <div className="py-4 text-center">
-                  <h6 className="font-poppins text-lg">Total Pemungutan suara</h6>
-                  <span className="font-poppins">{voter && voter.filter((vote) => vote.status === true).length}</span>
+            <div className="py-14">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="py-2 flex flex-col mr-2 md:mr-0 items-center justify-center px-6 border-2 border-secondary rounded-xl">
+                    <h6 className="text-secondary font-poppins text-sm lg:text-md xl:text-lg capitalize">total suara</h6>
+                    <span className="text-secondary font-poppins text-md mt-2">{voter.filter((vote) => vote.status === true).length}</span>
+                  </div>
+                  <div className="py-2 flex flex-col mr-2 md:mr-0 items-center justify-center px-6 border-2 border-secondary rounded-xl">
+                    <h6 className="text-secondary font-poppins text-sm lg:text-md xl:text-lg capitalize">suara terbanyak</h6>
+                    <span className="text-secondary font-poppins text-md mt-2 capitalize">{candidates.data.sort((a, b) => b.count - a.count)[0].name}</span>
+                  </div>
                 </div>
-                <div className="ml-auto py-4 text-center">
-                  <h6 className="font-poppins text-lg">Kandidat Pemenang </h6>
-                  <span className="uppercase">{candidates.data && candidates.data.sort((a, b) => b.count - a.count)[0].name}</span>
+                <div className="flex justify-center">
+                  <div className="w-full xl:w-11/12 ">
+                    <div className="flex justify-around">
+                      {candidates.data.map(({ name, count }, index) => {
+                        return (
+                          <>
+                            <div className="flex flex-col items-center" key={index}>
+                              <img width={'110'} src={process.env.PUBLIC_URL + '/img/profile.png'} alt="" />
+                              <span className="text-secondary text-md font-poppins capitalize py-1">{name}</span>
+                              <span className="text-secondary text-md font-poppins">{count}</span>
+                            </div>
+                          </>
+                        );
+                      })}
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-            {candidates.data && (
-              <div className="my-12">
-                <div className="grid grid-cols-1 lg:grid-cols-2">
-                  <div className="order-2 lg:order-1 ">
+            <div className="py-6">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <div className="flex justify-center order-2 lg:order-1">
+                  <div className="w-full">
                     <BarChartComponent candidates={candidates.data} />
                   </div>
-                  <div className="order-1 lg:order-2">
+                </div>
+                <div className="flex  justify-center order-1 lg:order-2">
+                  <div className="w-8/12 lg:w-1/2">
                     <PieChartComponent candidates={candidates.data} />
                   </div>
                 </div>
               </div>
-            )}
-            <div className="flex">
-              <div className="ml-auto mb-2">
-                <button onClick={() => setForm(!form)} className="px-4 py-2 bg-gray-50 text-black rounded shadow">
-                  Tambah Peserta
-                </button>
-                {form && (
-                  <form onSubmit={submitHandler}>
-                    <div className="flex flex-col">
-                      <input type="text" onChange={(e) => setParticipant(e.target.value)} value={participant} placeholder="Nama Peserta" className="px-4 py-2 my-2 focus:outline-none shadow-sm rounded bg-gray-200 text-black" />
-                      {success && <span className="text-green-400">Berhasil ditambahkan </span>}
-                      <input type="text" name="token" disabled value={Math.random().toString(36).substring(2, 8).toUpperCase()} className="px-4 py-2 my-2 focus:outline-none shadow-sm rounded bg-gray-200 text-black" />
-                      <div className="ml-auto">
-                        {fillField && (
-                          <button className="px-4 py-2 bg-gray-200 text-black rounded shadow" disabled>
-                            Isi dulu namanya
-                          </button>
-                        )}
-                        {!fillField && <button className="px-4 py-2 bg-gray-800 text-white rounded shadow">Submit</button>}
-                      </div>
-                    </div>
-                  </form>
-                )}
-              </div>
             </div>
-            <VoterTableComponent voter={voter} />
+            <div className="py-14">
+              <div className="pb-6 capitalize lg:w-1/2 w-full flex flex-col lg:flex-row">
+                <Link to={'/admin'} className="mb-6 lg:mb-0">
+                  <span className="px-8 py-2 bg-primary mr-4 border-secondary border-2 text-secondary text-md rounded-md">tabel peserta</span>
+                </Link>
+                <Link to={'participant'}>
+                  <span className="px-8 py-2 bg-primary mr-4 border-secondary border-2 text-secondary text-md rounded-md">tambah peserta</span>
+                </Link>
+              </div>
+              <Outlet />
+            </div>
           </>
         ) : (
-          <div className="flex justify-center">
-            <LoadingComponent />
-          </div>
+          <LoadingComponent />
         )}
       </div>
     </div>

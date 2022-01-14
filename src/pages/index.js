@@ -75,7 +75,7 @@ const Home = () => {
                         type="text"
                         placeholder="Token"
                         autoComplete="off"
-                        className="focus:border-secondary  focus:outline-secondary px-4 py-3 md:py-2 xl:py-3 rounded-xl bg-primary border-2 border-solid border-secondary text-secondary"
+                        className="focus:border-secondary px-4 py-3 md:py-2 xl:py-3 rounded-xl bg-primary border-2 border-solid border-secondary text-secondary"
                       />
                       {invalidToken && <span className="text-sm px-3 py-2 transition-all text-red-500 font-poppins">Token Salah</span>}
                       {rules ? (

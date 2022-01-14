@@ -10,6 +10,7 @@ module.exports = {
         secondary: '#ffec78',
         utils: '#1e1633',
         title: '#fef8fd',
+        table: '#1e1633',
       },
     },
   },

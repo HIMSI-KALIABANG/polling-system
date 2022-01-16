@@ -4,7 +4,7 @@ import { Pie } from 'react-chartjs-2';
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const PieChartComponent = ({ candidates }) => {
-  const labels = candidates.map((candidate) => candidate.name);
+  const labels = candidates.map(({ name }) => (name === 'Hanna Allisa Qothrun Nada' ? 'Hanna Allisa' : name));
   const options = {
     responsive: true,
     maintainAspectRatio: true,
@@ -15,7 +15,7 @@ const PieChartComponent = ({ candidates }) => {
     datasets: [
       {
         label: 'Jumlah Suara Kandidat',
-        data: candidates.map((candidate) => candidate.count),
+        data: candidates.map(({ count }) => count),
         backgroundColor: ['rgba(0, 147, 255, 0.2)', 'rgba(0, 147, 200, 0.2)', 'rgba(0, 147, 150, 0.2)'],
       },
     ],

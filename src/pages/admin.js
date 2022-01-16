@@ -44,26 +44,28 @@ const Admin = () => {
         {candidates.data ? (
           <>
             <div className="py-14">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 order-2 lg:order-1">
                   <div className="py-2 flex flex-col mr-2 md:mr-0 items-center justify-center px-6 border-2 border-secondary rounded-xl">
                     <h6 className="text-secondary font-poppins text-sm lg:text-md xl:text-lg capitalize">total suara</h6>
                     <span className="text-secondary font-poppins text-md mt-2">{voter.filter((vote) => vote.status === true).length}</span>
                   </div>
                   <div className="py-2 flex flex-col mr-2 md:mr-0 items-center justify-center px-6 border-2 border-secondary rounded-xl">
                     <h6 className="text-secondary font-poppins text-sm lg:text-md xl:text-lg capitalize">suara terbanyak</h6>
-                    <span className="text-secondary font-poppins text-md mt-2 capitalize">{candidates.data.sort((a, b) => b.count - a.count)[0].name}</span>
+                    <span className="text-secondary font-poppins text-md mt-2 capitalize">
+                      {candidates.data.sort((a, b) => b.count - a.count)[0].name === 'Hanna Allisa Qothrun Nada' ? 'Hanna Allisa' : candidates.data.sort((a, b) => b.count - a.count)[0].name}
+                    </span>
                   </div>
                 </div>
-                <div className="flex justify-center">
+                <div className="flex justify-center order-1 lg:order-2">
                   <div className="w-full xl:w-11/12 ">
-                    <div className="flex justify-around">
-                      {candidates.data.map(({ name, count }, index) => {
+                    <div className="flex justify-between">
+                      {candidates.data.map(({ name, count, image }, index) => {
                         return (
                           <>
                             <div className="flex flex-col items-center" key={index}>
-                              <img width={'110'} src={process.env.PUBLIC_URL + '/img/profile.png'} alt="" />
-                              <span className="text-secondary text-md font-poppins capitalize py-1">{name}</span>
+                              <img src={`${process.env.PUBLIC_URL}/img/${image} `} alt={name} width={image === 'profile.png' ? '100' : '140'} />
+                              <span className="text-secondary text-md font-poppins capitalize py-1">{name === 'Hanna Allisa Qothrun Nada' ? 'Hanna Allisa' : name}</span>
                               <span className="text-secondary text-md font-poppins">{count}</span>
                             </div>
                           </>

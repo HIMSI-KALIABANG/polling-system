@@ -27,10 +27,10 @@ const Vote = () => {
   return (
     <>
       <div className="min-h-screen bg-primary">
-        <div className="lg:mx-32 mx-3 py-8">
+        <div className="lg:mx-32 mx-1 py-8">
           <div className="grid grid-cols-1 xl:grid-cols-2 gap-16">
             <div className="py-8">
-              <h4 className="text-xl font-poppins mb-2 mx-3 text-secondary pb-4">Daftar Kandidat</h4>
+              <h4 className="text-xl font-poppins mb-2 mx-1 text-secondary pb-4">Daftar Kandidat</h4>
               <div className=" flex justify-between">
                 {!candidates.data && <LoadingComponent />}
                 {candidates.data &&

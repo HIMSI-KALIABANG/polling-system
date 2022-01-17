@@ -64,7 +64,7 @@ const Admin = () => {
                         return (
                           <>
                             <div className="flex flex-col items-center" key={index}>
-                              <img src={`${process.env.PUBLIC_URL}/img/${image} `} alt={name} width={image === 'profile.png' ? '100' : '140'} />
+                              <img src={`${process.env.PUBLIC_URL}/img/${image} `} alt={name} className="px-1" />
                               <span className="text-secondary text-md font-poppins capitalize py-1">{name === 'Hanna Allisa Qothrun Nada' ? 'Hanna Allisa' : name}</span>
                               <span className="text-secondary text-md font-poppins">{count}</span>
                             </div>

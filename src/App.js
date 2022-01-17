@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import FormCandidate from './components/FormCandidate';
+import VisionMissonComponent from './components/VisionMissonComponent';
 import VoterTableComponent from './components/VoterTableComponent';
 import GetVoter from './hooks/getVoter';
 import Home from './pages';
@@ -15,7 +16,9 @@ const App = () => {
       <Router>
         <Routes>
           <Route path={'/'} element={<Home />} />
-          <Route path={'/vote'} element={<Vote />} />
+          <Route path={'/vote'} element={<Vote />}>
+            <Route path=":name" element={<VisionMissonComponent />} />
+          </Route>
           <Route path={'/admin'} element={<Admin />}>
             <Route path={'/admin'} element={<VoterTableComponent voter={voter} />} />
             <Route path={'participant'} element={<FormCandidate />} />

@@ -60,7 +60,7 @@ const Home = () => {
               <div className="w-full p-0 2xl:p-12">
                 <h3 className="text-2xl xl:text-4xl font-extrabold tracking-wider font-poppins text-title capitalize">selamat datang di </h3>
                 <h2 className="text-2xl xl:text-4xl font-extrabold my-1 tracking-wider font-poppins text-title capitalize">
-                  Pemilihan <span className="text-secondary"> Suara Online</span>{' '}
+                  Pemilihan <span className="text-secondary"> Suara Online Himsi vote</span>{' '}
                 </h2>
                 <h4 className="text-md 2xl:text-lg text-opacity-60 font-extralight font-poppins text-title capitalize">
                   <i className="text-opacity-20">Pilih sesuai hati nurani dan luber judil</i>

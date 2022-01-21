@@ -95,6 +95,9 @@ const Admin = () => {
                 <Link to={'/admin'} className="mb-6 lg:mb-0">
                   <span className="px-8 py-2 bg-primary mr-4 border-secondary border-2 text-secondary text-md rounded-md">Live tabel </span>
                 </Link>
+                <Link to={'golput'} className="mb-6 lg:mb-0">
+                  <span className="px-8 py-2 bg-primary mr-4 border-secondary border-2 text-secondary text-md rounded-md">Belum memilih</span>
+                </Link>
                 <Link to={'participant'}>
                   <span className="px-8 py-2 bg-primary mr-4 border-secondary border-2 text-secondary text-md rounded-md">tambah peserta</span>
                 </Link>

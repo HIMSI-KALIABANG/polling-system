@@ -9,6 +9,7 @@ import PieChartComponent from '../components/PieChartComponent';
 
 const Admin = () => {
   const [secretKey, setSecretKey] = useState('');
+  const [golput, setGolput] = useState('');
 
   const navigate = useNavigate();
   const { voter } = GetVoter();
@@ -30,6 +31,28 @@ const Admin = () => {
     }
   }, [secretKey, navigate]);
 
+  useEffect(() => {
+    if (voter) {
+      const putri = voter.filter((vote) => {
+        return vote.candidate === 'Nurwanda Putri';
+      });
+
+      const iqbal = voter.filter((vote) => {
+        return vote.candidate === 'Iqbal Pambagyo';
+      });
+
+      const hanna = voter.filter((vote) => {
+        return vote.candidate === 'Hanna Allisa Qothrun Nada';
+      });
+
+      const voterExceptDev = voter.filter((vote) => {
+        return vote.name !== 'Developer';
+      });
+
+      setGolput(voterExceptDev.length - (iqbal.length + putri.length + hanna.length));
+    }
+  }, [voter]);
+
   return (
     <div className="min-h-screen bg-primary">
       <div className="lg:mx-32 mx-8 py-8">
@@ -45,16 +68,20 @@ const Admin = () => {
           <>
             <div className="py-14">
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 order-2 lg:order-1">
-                  <div className="py-2 flex flex-col mr-2 md:mr-0 items-center justify-center px-6 border-2 border-secondary rounded-xl">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 order-2 lg:order-1">
+                  <div className="py-2 flex flex-col mr-2 md:mr-0 items-center text-center justify-center px-6 border-2 border-secondary rounded-xl">
                     <h6 className="text-secondary font-poppins text-sm lg:text-md xl:text-lg capitalize">total suara</h6>
                     <span className="text-secondary font-poppins text-md mt-2">{voter.filter((vote) => vote.status === true).length}</span>
                   </div>
-                  <div className="py-2 flex flex-col mr-2 md:mr-0 items-center justify-center px-6 border-2 border-secondary rounded-xl">
+                  <div className="py-2 flex flex-col mr-2 md:mr-0 items-center text-center justify-center px-6 border-2 border-secondary rounded-xl">
                     <h6 className="text-secondary font-poppins text-sm lg:text-md xl:text-lg capitalize">suara terbanyak</h6>
                     <span className="text-secondary font-poppins text-md mt-2 capitalize">
                       {candidates.data.sort((a, b) => b.count - a.count)[0].name === 'Hanna Allisa Qothrun Nada' ? 'Hanna Allisa' : candidates.data.sort((a, b) => b.count - a.count)[0].name}
                     </span>
+                  </div>
+                  <div className="py-2 flex flex-col mr-2 md:mr-0 items-center text-center justify-center px-6 border-2 border-secondary rounded-xl">
+                    <h6 className="text-secondary font-poppins text-sm lg:text-md xl:text-lg capitalize">Golput</h6>
+                    <span className="text-secondary font-poppins text-md mt-2 capitalize">{golput}</span>
                   </div>
                 </div>
                 <div className="flex justify-center order-1 lg:order-2">
@@ -65,7 +92,7 @@ const Admin = () => {
                           <>
                             <div className="flex flex-col items-center" key={index}>
                               <img src={`${process.env.PUBLIC_URL}/img/${image} `} alt={name} className="px-1" />
-                              <span className="text-secondary text-md font-poppins capitalize py-1">{name === 'Hanna Allisa Qothrun Nada' ? 'Hanna Allisa' : name}</span>
+                              <span className="text-secondary text-md font-poppins capitalize py-1 text-center md:text-left">{name === 'Hanna Allisa Qothrun Nada' ? 'Hanna Allisa' : name}</span>
                               <span className="text-secondary text-md font-poppins">{count}</span>
                             </div>
                           </>

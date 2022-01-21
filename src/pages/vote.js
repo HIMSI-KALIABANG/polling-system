@@ -11,6 +11,17 @@ const Vote = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    const currentDate = new Date();
+
+    const closeDate = new Date();
+    closeDate.setHours(19, 0, 0); // 17 PM
+
+    if (currentDate > closeDate) {
+      return navigate('/closing');
+    }
+  }, [navigate]);
+
+  useEffect(() => {
     const currentToken = JSON.parse(localStorage.getItem('token'));
     if (!currentToken) return navigate('/');
 

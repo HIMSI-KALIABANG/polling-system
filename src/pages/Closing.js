@@ -7,7 +7,7 @@ const Closing = () => {
     const currentDate = new Date();
 
     const closeDate = new Date();
-    closeDate.setHours(19, 0, 0); // 17 PM
+    closeDate.setHours(20, 0, 0); // 20 PM
 
     if (currentDate < closeDate) {
       return navigate('/404');

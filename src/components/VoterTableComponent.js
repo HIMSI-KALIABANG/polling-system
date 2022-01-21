@@ -4,8 +4,8 @@ const VoterTableComponent = ({ voter }) => {
       <div className="flex flex-col">
         <div className="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-            <div className="shadow overflow-hidden border-b border-secondary sm:rounded-lg">
-              <table className="min-w-full divide-y">
+            <div className="shadow  h-96 border-b border-secondary sm:rounded-lg">
+              <table className="min-w-full divide-y overflow-y-scroll ">
                 <thead className="bg-table">
                   <tr>
                     <th scope="col" className="font-poppins px-6 py-3 text-left text-xs font-medium text-secondary uppercase tracking-wider">

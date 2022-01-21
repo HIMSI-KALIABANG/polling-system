@@ -14,7 +14,7 @@ const Vote = () => {
     const currentDate = new Date();
 
     const closeDate = new Date();
-    closeDate.setHours(20, 0, 0); // 20 PM
+    closeDate.setHours(21, 30, 0); // 20 PM
 
     if (currentDate > closeDate) {
       return navigate('/closing');

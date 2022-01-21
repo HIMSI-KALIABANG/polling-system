@@ -25,6 +25,7 @@ const GolputTableComponent = ({ voter }) => {
                   {voter &&
                     voter
                       .filter((vote) => vote.status === false)
+                      .filter((vote) => vote.name !== 'Developer')
                       .map(({ name, candidate, token }, index) => {
                         return (
                           <>

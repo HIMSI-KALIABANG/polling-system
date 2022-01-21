@@ -10,7 +10,7 @@ const Closing = () => {
     closeDate.setHours(19, 0, 0); // 17 PM
 
     if (currentDate < closeDate) {
-      return navigate('/');
+      return navigate('/404');
     } else {
       localStorage.removeItem('token');
     }

@@ -11,6 +11,8 @@ const Closing = () => {
 
     if (currentDate < closeDate) {
       return navigate('/');
+    } else {
+      localStorage.removeItem('token');
     }
   }, [navigate]);
 
